@@ -4,5 +4,6 @@ export const StyledPopupWrapper = styled.div`
   min-width: 300px;
   padding: 15px;
   border-radius: 2px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
 `;

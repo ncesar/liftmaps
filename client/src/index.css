@@ -21,7 +21,6 @@ body {
 .marker.yellow path {
   fill: #f3b73e;
 }
-form {
-  display: flex;
-  flex-direction: column;
+.mapboxgl-popup {
+  z-index: 99;
 }

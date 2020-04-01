@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactMapGL from 'react-map-gl';
-import { listLogEntries } from '../data/API';
+import Geocoder from 'react-map-gl-geocoder';
+import { StyledGeolocateControl } from './styled';
 import { LogEntries } from '../components/LogEntries/LogEntries';
 import { AddLogEntry } from '../components/AddLogEntry/AddLogEntry';
+import { listLogEntries } from '../data/API';
 
 const Map = ({ ...other }) => {
   const [logEntries, setLogEntires] = useState([]);
   const [showPopup, setShowPopup] = useState({});
   const [addEntryLocation, setAddEntryLocation] = useState(null);
+  const mapRef = useRef(null);
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '100vh',
     latitude: -26.914762,
     longitude: -49.081432,
-    zoom: 13,
+    zoom: 14,
   });
 
   const getEntries = async () => {
@@ -23,6 +26,14 @@ const Map = ({ ...other }) => {
 
   useEffect(() => {
     getEntries();
+    navigator.geolocation.getCurrentPosition(pos => {
+      setViewport({
+        ...viewport,
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showAddMarkerPopup = e => {
@@ -36,11 +47,25 @@ const Map = ({ ...other }) => {
     <ReactMapGL
       {...viewport}
       onViewportChange={setViewport}
+      ref={mapRef}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       mapStyle="mapbox://styles/ceesar90/ck89fgqi501i71iprcilptp1k"
       onDblClick={showAddMarkerPopup}
       {...other}
     >
+      <Geocoder
+        mapRef={mapRef}
+        onViewportChange={setViewport}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        placeholder="Procure o local"
+      />
+      <StyledGeolocateControl
+        onViewportChange={setViewport}
+        positionOptions={{ enableHighAccuracy: true }}
+        trackUserLocation={true}
+        fitBoundsOptions={{ maxZoom: viewport.zoom }}
+        onGeolocate={setViewport}
+      />
       {logEntries.map(entry => (
         <LogEntries
           key={entry._id}
@@ -52,7 +77,12 @@ const Map = ({ ...other }) => {
           onPopupClose={() => setShowPopup({})}
           title={entry.title}
           description={entry.description}
-          visitDate={entry.visitDate}
+          website={entry.website}
+          phone={entry.phone}
+          placeOptions={entry.placeOptions}
+          workingTime={entry.workingTime}
+          category={entry.category}
+          isWhatsapp={entry.isWhatsapp}
         />
       ))}
       {addEntryLocation && (
