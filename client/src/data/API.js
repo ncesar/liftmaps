@@ -1,12 +1,7 @@
-const API_URL = 'http://localhost:1337';
+const API_URL = process.env.REACT_APP_API_URL;
 
 export async function listLogEntries() {
   const response = await fetch(`${API_URL}/api/logs`);
-  return response.json();
-}
-
-export async function getFirebaseKeys() {
-  const response = await fetch(`${API_URL}/api/get`);
   return response.json();
 }
 

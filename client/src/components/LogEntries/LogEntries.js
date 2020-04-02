@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Marker, Popup } from 'react-map-gl';
 import { SVG } from '../CustomSVGElement/CustomSVGElement';
+import { Heart } from '@styled-icons/boxicons-solid/Heart';
 import {
   PopupWrapper,
   Title,
@@ -8,6 +9,7 @@ import {
   FavoritesWrapper,
   Description,
   LabelType,
+  PopupListItem,
 } from './styled';
 
 export const LogEntries = props => {
@@ -68,40 +70,65 @@ export const LogEntries = props => {
           anchor="top"
         >
           <PopupWrapper className="popup">
-            <FavoritesWrapper></FavoritesWrapper>
-            <Title>{title}</Title>
-            <Description>{description}</Description>
-            <LabelType>Endereço:</LabelType>
-            <Label>{address}</Label>
-            <LabelType>Site/Link:</LabelType>
-            <a href={website} target="_blank" rel="noopener noreferrer">
-              <Label>{website}</Label>
-            </a>
-            {isWhatsapp ? (
-              <>
-                <LabelType>Whatsapp</LabelType>
-                <a
-                  href={`http://api.whatsapp.com/send?phone=55${phone}&text=Ola,%20eu%20achei%20o%20seu%20estabelecimento%20no%20site%20X,%20pode%20me%20ajudar?%3f&source=&data=`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Label>{phone}</Label>
+            <FavoritesWrapper>
+              <Label>Adicionar aos favoritos</Label>
+              <Heart className="icon" />
+            </FavoritesWrapper>
+            <PopupListItem button>
+              <Title>{title}</Title>
+              <Description>{description}</Description>
+            </PopupListItem>
+            <PopupListItem button>
+              <LabelType>Endereço:</LabelType>
+              <Label>{address}</Label>
+            </PopupListItem>
+            {website && (
+              <PopupListItem button>
+                <LabelType>Site/Link:</LabelType>
+                <a href={website} target="_blank" rel="noopener noreferrer">
+                  <Label>{website}</Label>
                 </a>
-              </>
-            ) : (
-              <>
-                <LabelType>Telefone</LabelType>
-                <a href={`tel:+${phone}`}>
-                  <Label>{phone}</Label>
-                </a>
-              </>
+              </PopupListItem>
             )}
-            <LabelType>Esse local:</LabelType>
-            <Label>{placeOptions}</Label>
-            <LabelType>Horário de funcionamento:</LabelType>
-            <Label>{workingTime}</Label>
-            <LabelType>Categoria:</LabelType>
-            <Label>{category}</Label>
+            {phone ? (
+              isWhatsapp ? (
+                <PopupListItem button>
+                  <LabelType>Whatsapp</LabelType>
+                  <a
+                    href={`http://api.whatsapp.com/send?phone=55${phone}&text=Ola,%20eu%20achei%20o%20seu%20estabelecimento%20no%20site%20X,%20pode%20me%20ajudar?%3f&source=&data=`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Label>{phone}</Label>
+                  </a>
+                </PopupListItem>
+              ) : (
+                <PopupListItem button>
+                  <LabelType>Telefone</LabelType>
+                  <a href={`tel:+${phone}`}>
+                    <Label>{phone}</Label>
+                  </a>
+                </PopupListItem>
+              )
+            ) : null}
+            {placeOptions && (
+              <PopupListItem button>
+                <LabelType>Opções de atendimento:</LabelType>
+                <Label>{placeOptions}</Label>
+              </PopupListItem>
+            )}
+            {workingTime && (
+              <PopupListItem button>
+                <LabelType>Horário de funcionamento:</LabelType>
+                <Label>{workingTime}</Label>
+              </PopupListItem>
+            )}
+            {category && (
+              <PopupListItem button>
+                <LabelType>Categoria:</LabelType>
+                <Label>{category}</Label>
+              </PopupListItem>
+            )}
           </PopupWrapper>
         </Popup>
       )}

@@ -51,7 +51,14 @@ PAGINA INICIAL C O MAPA MOSTRANDO AS MARCAÇÕES COM A VARIÁVEL accepted: true
 	[N] - TEREMOS FILE INPUT? QUESTIONAR SOBRE IMAGEM
 	
 [X] - LISTA DO QUE CHEGA NO BACKEND TEM O ACCEPTED COMO FALSE?
-[ ] - AUTH
+[X] - estilizar botões para parecer um dropdown
+[X] - MASK NO NUMBER
+[X] - LIMITAR TÍTULO E DESCRIÇÃO
+[N] - Talvez na descrição colocar um read more, caso exists um exemplo c o material
+[X] - Limitar caracteres em todos os campos, a princípio c css
+[X] - usar list item no popup
+[X] - AUTH
+[ ] - AUTORIZAR FUNÇÃO DE 2 CLIQUES APENAS PARA QUEM ESTIVER LOGADO, SE N ESTIVER, MOSTRAR UM POPUP
 [ ] - QUALQUER PESSOA LOGADA VAI PODER CRIAR UM LUGAR, MAS VAI VIM COM ACCEPTED FALSE
 [ ] - MOSTRAR POPUP DIZENDO QUE ELA PODE CLICAR EM UMA LOCALIZAÇÃO 2X PARA ADD UM LUGAR
 [ ] - CHECAR SE A PESSOA ESTÁ LOGADA. SE NÃO, DIZER QUE SÓ DA PRA ADD CASO ESTEJA
@@ -71,6 +78,10 @@ PAGINA INICIAL C O MAPA MOSTRANDO AS MARCAÇÕES COM A VARIÁVEL accepted: true
 [ ] - mascara para email e telefone com react-hooks-forms
 [ ] - limitar o número de markers por zoom?
 [ ] - trocar erros de console.log para enviar pro servidor
+[ ] - Markers com cor dependendo da cagegoria
+[ ] - Local storage visit time > 5 pedir doação
+[ ] - Localstorage is first time? Mostrar alguma extensao de tutorial
+[ ] - https://stackoverflow.com/questions/52100690/should-i-hide-firebase-api-keys-into-backend-not-due-to-data-security-but-proje checar isso
 [N] - checar se a string começa com https:// ou http://, se não, colocar
 [X] - ordenar dia -> mudar no back para array, enviar como array e ordenar
 [N] - UPLOAD DE IMAGENS

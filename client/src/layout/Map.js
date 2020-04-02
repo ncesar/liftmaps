@@ -58,6 +58,7 @@ const Map = ({ ...other }) => {
         onViewportChange={setViewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         placeholder="Procure o local"
+        position="top-left"
       />
       <StyledGeolocateControl
         onViewportChange={setViewport}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createLogEntry } from '../../data/API';
+import InputMask from 'react-input-mask';
 import {
   TextField,
   Select,
@@ -10,17 +11,19 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@material-ui/core';
+import { Send } from '@styled-icons/boxicons-solid/Send';
 import { LogEntryFormWrapper, StyledButton } from './styled';
 import { DaysOfWork } from './DaysOfWork';
+import { PlaceOptions } from './PlaceOptions';
 
 const LogEntryForm = ({ location, onClose }) => {
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState('');
 
-  const [placeOptions, setPlaceOptions] = useState('');
-
   const [category, setCategory] = useState('');
+
+  const [tel, setTel] = useState('');
 
   const [checked, setChecked] = useState(false);
 
@@ -57,6 +60,7 @@ const LogEntryForm = ({ location, onClose }) => {
         variant="outlined"
         label="Nome do local"
         margin="dense"
+        inputProps={{ maxLength: 20 }}
       />
       <FormControl variant="outlined" margin="dense">
         <InputLabel id="demo-simple-select-outlined-label">
@@ -69,11 +73,36 @@ const LogEntryForm = ({ location, onClose }) => {
           onChange={e => setCategory(e.target.value)}
           label="Esse local.."
         >
-          <MenuItem value="Mantimentos">Mantimentos</MenuItem>
-          <MenuItem value="Refeições">Refeições</MenuItem>
-          <MenuItem value="Serviços">Serviços</MenuItem>
-          <MenuItem value="Pets">Pets</MenuItem>
-          <MenuItem value="Outros">Outros</MenuItem>
+          <MenuItem value="Mantimentos 🛒">
+            Mantimentos
+            <span role="img" aria-label="Mantimentos">
+              &nbsp;🛒
+            </span>
+          </MenuItem>
+          <MenuItem value="Refeições 🍽">
+            Refeições
+            <span role="img" aria-label="Refeições">
+              &nbsp;🍽
+            </span>
+          </MenuItem>
+          <MenuItem value="Serviços 💼">
+            Serviços
+            <span role="img" aria-label="Serviços">
+              &nbsp;💼
+            </span>
+          </MenuItem>
+          <MenuItem value="Pets 🐶">
+            Pets
+            <span role="img" aria-label="Pets">
+              &nbsp;🐶
+            </span>
+          </MenuItem>
+          <MenuItem value="Outros 🛠">
+            Outros
+            <span role="img" aria-label="Outros">
+              &nbsp;🛠
+            </span>
+          </MenuItem>
         </Select>
         <input
           name="category"
@@ -83,40 +112,17 @@ const LogEntryForm = ({ location, onClose }) => {
           style={{ display: 'none' }}
         />
       </FormControl>
-      <FormControl variant="outlined" margin="dense">
-        <InputLabel id="demo-simple-select-outlined-label">
-          Esse local..
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={placeOptions}
-          onChange={e => setPlaceOptions(e.target.value)}
-          label="Esse local.."
-        >
-          <MenuItem value="Entrega em casa">Entrega em casa</MenuItem>
-          <MenuItem value="Retirada(drive-thru)">Retirada(drive-thru)</MenuItem>
-          <MenuItem value="Atendimento na loja">Atendimento na loja</MenuItem>
-          <MenuItem value="Entrega e Retirada">Entrega e Retirada</MenuItem>
-          <MenuItem value="Reserva/Envio">Reserva/Envio</MenuItem>
-          <MenuItem value="Virtual/Online">Virtual/Online</MenuItem>
-        </Select>
-        <input
-          name="placeOptions"
-          value={placeOptions}
-          ref={register}
-          readOnly
-          style={{ display: 'none' }}
-        />
-      </FormControl>
+      <PlaceOptions registerRef={register} />
+      <DaysOfWork registerRef={register} />
       <TextField
         name="description"
-        rows={3}
+        rows={2}
         multiline
         inputRef={register}
         label="Sobre o local(tempo de entrega, etc)"
         variant="outlined"
         margin="dense"
+        inputProps={{ maxLength: 60 }}
       />
       <TextField
         name="website"
@@ -124,14 +130,27 @@ const LogEntryForm = ({ location, onClose }) => {
         label="Site/Link"
         variant="outlined"
         margin="dense"
+        inputProps={{ maxLength: 35 }}
       />
-      <TextField
+      <InputMask
+        value={tel}
         name="phone"
-        inputRef={register}
-        label="Whats/Telefone(DDD)"
-        variant="outlined"
-        margin="dense"
-      />
+        mask="(99) 99999-9999"
+        alwaysShowMask
+        onChange={e => setTel(e.target.value)}
+      >
+        {inputProps => (
+          <TextField
+            {...inputProps}
+            inputRef={register}
+            name="phone"
+            label="Whats/Telefone(DDD)"
+            variant="outlined"
+            margin="dense"
+            placeholder="(99) 9.9999-9999"
+          />
+        )}
+      </InputMask>
       <FormControlLabel
         control={
           <Checkbox
@@ -143,8 +162,8 @@ const LogEntryForm = ({ location, onClose }) => {
           />
         }
         label="É whatsapp?"
+        style={{ marginTop: '-10px' }}
       />
-      <DaysOfWork registerRef={register} />
       <StyledButton
         disabled={loading}
         variant="contained"
@@ -152,7 +171,14 @@ const LogEntryForm = ({ location, onClose }) => {
         margin="dense"
         type="submit"
       >
-        {loading ? 'Loading...' : 'Create Log Entry'}
+        {loading ? (
+          'Carregando...'
+        ) : (
+          <span>
+            Adicionar local
+            <Send className="icon" style={{ marginLeft: 5 }} />
+          </span>
+        )}
       </StyledButton>
     </LogEntryFormWrapper>
   );

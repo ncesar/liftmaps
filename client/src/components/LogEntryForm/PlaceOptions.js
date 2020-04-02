@@ -8,20 +8,18 @@ import {
 } from '@material-ui/core';
 import { DaysOfWorkWrapper, StyledDropdown } from './styled';
 
-export const DaysOfWork = props => {
+export const PlaceOptions = props => {
   const { registerRef, ...other } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [checkboxState, setCheckboxState] = useState({
-    seg: false,
-    ter: false,
-    qua: false,
-    qui: false,
-    sex: false,
-    sab: false,
-    dom: false,
+    retirada: false,
+    reservaEnvio: false,
+    virtualOnline: false,
+    entregaRetirada: false,
+    atendimentoLoja: false,
   });
-  const [workingTime, setWorkingTime] = useState('');
+  const [placeOptions, setPlaceOptions] = useState('');
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
@@ -42,12 +40,24 @@ export const DaysOfWork = props => {
 
   const setDays = () => {
     let arrayOfDays = Object.keys(filterDaysOfWork);
-    for (let i = 0; i < arrayOfDays.length; i++) {
-      arrayOfDays[i] =
-        arrayOfDays[i].charAt(0).toUpperCase() + arrayOfDays[i].substr(1);
+    let result = [];
+    if (arrayOfDays.includes('retirada')) {
+      result.push('Retirada(drive-thru)');
     }
-    const days = arrayOfDays.join(', ');
-    setWorkingTime(days);
+    if (arrayOfDays.includes('reservaEnvio')) {
+      result.push('Reserva/Envio');
+    }
+    if (arrayOfDays.includes('virtualOnline')) {
+      result.push('Virtual/Online');
+    }
+    if (arrayOfDays.includes('entregaRetirada')) {
+      result.push('Entrega e Retirada');
+    }
+    if (arrayOfDays.includes('atendimentoLoja')) {
+      result.push('Atendimento na loja');
+    }
+    const days = result.join(' ,');
+    setPlaceOptions(days);
   };
 
   const handlePopoverClose = e => {
@@ -55,9 +65,17 @@ export const DaysOfWork = props => {
     setDays();
   };
 
-  const { seg, ter, qua, qui, sex, sab, dom } = checkboxState;
+  const {
+    retirada,
+    reservaEnvio,
+    virtualOnline,
+    entregaRetirada,
+    atendimentoLoja,
+  } = checkboxState;
   const checkAndShowString =
-    workingTime.length > 20 ? `${workingTime.substr(0, 20)}...` : workingTime;
+    placeOptions.length > 20
+      ? `${placeOptions.substr(0, 20)}...`
+      : placeOptions;
   return (
     <DaysOfWorkWrapper {...other}>
       <StyledDropdown
@@ -66,7 +84,7 @@ export const DaysOfWork = props => {
         onClick={handlePopoverClick}
         style={{ width: '100%' }}
       >
-        {workingTime ? checkAndShowString : 'Quando está aberto?'}
+        {placeOptions ? checkAndShowString : 'Opções de atendimento:'}
         <svg
           className="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
           focusable="false"
@@ -101,86 +119,64 @@ export const DaysOfWork = props => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={seg}
+                  checked={retirada}
                   onChange={handleCheckboxOnChange}
-                  name="seg"
+                  name="retirada"
                   color="primary"
                 />
               }
-              label="Segunda"
+              label="Retirada(drive-thru)"
             />
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={ter}
+                  checked={reservaEnvio}
                   onChange={handleCheckboxOnChange}
-                  name="ter"
+                  name="reservaEnvio"
                   color="primary"
                 />
               }
-              label="Terça"
+              label="Reserva/Envio"
             />
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={qua}
+                  checked={virtualOnline}
                   onChange={handleCheckboxOnChange}
-                  name="qua"
+                  name="virtualOnline"
                   color="primary"
                 />
               }
-              label="Quarta"
+              label="Virtual/Online"
             />
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={qui}
+                  checked={entregaRetirada}
                   onChange={handleCheckboxOnChange}
-                  name="qui"
+                  name="entregaRetirada"
                   color="primary"
                 />
               }
-              label="Quinta"
+              label="Entrega e Retirada"
             />
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={sex}
+                  checked={atendimentoLoja}
                   onChange={handleCheckboxOnChange}
-                  name="sex"
+                  name="atendimentoLoja"
                   color="primary"
                 />
               }
-              label="Sexta"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={sab}
-                  onChange={handleCheckboxOnChange}
-                  name="sab"
-                  color="primary"
-                />
-              }
-              label="Sábado"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={dom}
-                  onChange={handleCheckboxOnChange}
-                  name="dom"
-                  color="primary"
-                />
-              }
-              label="Domingo"
+              label="Atendimento na loja"
             />
           </FormGroup>
         </FormControl>
       </Popover>
       <input
-        name="workingTime"
-        value={workingTime}
+        name="placeOptions"
+        value={placeOptions}
         ref={registerRef}
         readOnly
         style={{ display: 'none' }}
