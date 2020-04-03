@@ -94,3 +94,6 @@ PAGINA INICIAL C O MAPA MOSTRANDO AS MARCAÇÕES COM A VARIÁVEL accepted: true
 [x] - Add link whatsapp
 [X] - CAMPO DE ENDEREÇO DE FORMA CUSTOMIZADA
 .... Lembrar de setar o CORS para o servidor que vai rodar.
+
+https://github.com/uber/react-map-gl/issues?q=performance
+https://github.com/uber/react-map-gl/issues/750
