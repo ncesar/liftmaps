@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SVG = ({ viewport, ...other }) => (
+export const SVG = React.memo(({ viewport, ...other }) => (
   <svg
     version="1.1"
     x="0px"
@@ -22,4 +22,4 @@ export const SVG = ({ viewport, ...other }) => (
       </g>
     </g>
   </svg>
-);
+));

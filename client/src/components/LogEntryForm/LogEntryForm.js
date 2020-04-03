@@ -10,9 +10,10 @@ import {
   FormControl,
   FormControlLabel,
   Checkbox,
+  Button,
 } from '@material-ui/core';
 import { Send } from '@styled-icons/boxicons-solid/Send';
-import { LogEntryFormWrapper, StyledButton } from './styled';
+import { LogEntryFormWrapper, StyledButton, StyledFeedback } from './styled';
 import { DaysOfWork } from './DaysOfWork';
 import { PlaceOptions } from './PlaceOptions';
 
@@ -29,6 +30,8 @@ const LogEntryForm = ({ location, onClose }) => {
 
   const { register, handleSubmit } = useForm();
 
+  const [userAccepted, setUserAccepted] = useState(false);
+
   const onSubmit = async data => {
     try {
       setLoading(true);
@@ -39,20 +42,38 @@ const LogEntryForm = ({ location, onClose }) => {
       const created = await createLogEntry(data);
 
       console.log(created);
-
-      onClose();
     } catch (error) {
       setError(error.message);
 
       setLoading(false);
     }
   };
+
+  if (userAccepted) {
+    onClose();
+  }
   return (
     <LogEntryFormWrapper
       onSubmit={handleSubmit(onSubmit)}
       className="entry-form"
     >
       {error && <h3 className="error">{error}</h3>}
+      {loading && (
+        <StyledFeedback>
+          Obrigado pela sua contribuição, em até um dia útil a sua marcação será
+          aprovada{' '}
+          <span role="img" aria-label="Carinha feliz">
+            😊
+          </span>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setUserAccepted(true)}
+          >
+            Confirmar envio
+          </Button>
+        </StyledFeedback>
+      )}
       <TextField
         name="title"
         required

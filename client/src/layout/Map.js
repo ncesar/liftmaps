@@ -1,15 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import ReactMapGL from 'react-map-gl';
 import Geocoder from 'react-map-gl-geocoder';
-import { StyledGeolocateControl } from './styled';
+import { StyledGeolocateControl, StyledAlertWrapper } from './styled';
+import Alert from '@material-ui/lab/Alert';
 import { LogEntries } from '../components/LogEntries/LogEntries';
 import { AddLogEntry } from '../components/AddLogEntry/AddLogEntry';
 import { listLogEntries } from '../data/API';
+import { AuthContext } from '../auth/Auth';
+import Login from '../components/Login/Login';
+import SignUp from '../components/SignUp/SignUp';
+import SignOut from '../components/SignOut/SignOut';
+import { ErrorCircle as ErrorIcon } from '@styled-icons/boxicons-solid/ErrorCircle';
 
 const Map = ({ ...other }) => {
   const [logEntries, setLogEntires] = useState([]);
   const [showPopup, setShowPopup] = useState({});
   const [addEntryLocation, setAddEntryLocation] = useState(null);
+  const [isNotLogged, setIsNotLogged] = useState(false);
   const mapRef = useRef(null);
   const [viewport, setViewport] = useState({
     width: '100vw',
@@ -35,13 +42,24 @@ const Map = ({ ...other }) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const { currentUser } = useContext(AuthContext);
 
   const showAddMarkerPopup = e => {
-    const [longitude, latitude] = e.lngLat;
-    setAddEntryLocation({
-      latitude,
-      longitude,
-    });
+    if (currentUser) {
+      const [longitude, latitude] = e.lngLat;
+      setAddEntryLocation({
+        latitude,
+        longitude,
+      });
+    } else {
+      setIsNotLogged(true);
+    }
+  };
+
+  const alertStyle = {
+    color: isNotLogged && '#fff',
+    fontWeight: isNotLogged && 'bold',
+    backgroundColor: isNotLogged && '#f44336',
   };
   return (
     <ReactMapGL
@@ -49,10 +67,37 @@ const Map = ({ ...other }) => {
       onViewportChange={setViewport}
       ref={mapRef}
       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      mapStyle="mapbox://styles/ceesar90/ck89fgqi501i71iprcilptp1k"
+      mapStyle="mapbox://styles/ceesar90/ck89fgqi501i71iprcilptp1k?optimize=true"
       onDblClick={showAddMarkerPopup}
       {...other}
     >
+      <StyledAlertWrapper>
+        {currentUser ? (
+          <Alert severity="success" action={<SignOut />}>
+            Seja bem vindo, {currentUser.email}. Clique duas vezes em qualquer
+            lugar do mapa para adicionar um local.
+          </Alert>
+        ) : (
+          <Alert
+            severity="info"
+            style={alertStyle}
+            icon={
+              <ErrorIcon
+                className="icon"
+                style={{ fill: isNotLogged && '#fff' }}
+              />
+            }
+            action={
+              <>
+                <Login />
+                <SignUp />
+              </>
+            }
+          >
+            Para adicionar itens no mapa você precisa estar logado!
+          </Alert>
+        )}
+      </StyledAlertWrapper>
       <Geocoder
         mapRef={mapRef}
         onViewportChange={setViewport}
@@ -84,6 +129,7 @@ const Map = ({ ...other }) => {
           workingTime={entry.workingTime}
           category={entry.category}
           isWhatsapp={entry.isWhatsapp}
+          accepted={entry.accepted}
         />
       ))}
       {addEntryLocation && (

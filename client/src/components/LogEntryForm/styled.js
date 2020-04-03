@@ -38,3 +38,20 @@ export const StyledDropdown = styled(Button)`
     }
   }
 `;
+export const StyledFeedback = styled.div`
+  border: 1px solid #bdb6b6;
+  width: 250px;
+  height: 110px;
+  background: #c5def6;
+  position: absolute;
+  z-index: 101;
+  display: flex;
+  padding: 10px;
+  border-radius: 2px;
+  right: 0;
+  left: 0;
+  margin: auto;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+`;

@@ -7,7 +7,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
 }
 .marker {
   transform: translate(-50%, -100%);

@@ -12,7 +12,7 @@ import {
   PopupListItem,
 } from './styled';
 
-export const LogEntries = props => {
+export const LogEntries = React.memo(props => {
   const {
     latitude,
     longitude,
@@ -28,6 +28,7 @@ export const LogEntries = props => {
     workingTime,
     category,
     isWhatsapp,
+    accepted,
     ...other
   } = props;
 
@@ -51,87 +52,89 @@ export const LogEntries = props => {
     props();
   };
   return (
-    <React.Fragment {...other}>
-      <Marker latitude={latitude} longitude={longitude}>
-        <SVG
-          className="marker yellow"
-          viewport={viewport}
-          onClick={() => loadAddressAndSVGProps(onSVGClick)}
-        />
-      </Marker>
-      {showPopupId && (
-        <Popup
-          latitude={latitude}
-          longitude={longitude}
-          closeButton={true}
-          closeOnClick={false}
-          dynamicPosition={true}
-          onClose={onPopupClose}
-          anchor="top"
-        >
-          <PopupWrapper className="popup">
-            <FavoritesWrapper>
-              <Label>Adicionar aos favoritos</Label>
-              <Heart className="icon" />
-            </FavoritesWrapper>
-            <PopupListItem button>
-              <Title>{title}</Title>
-              <Description>{description}</Description>
-            </PopupListItem>
-            <PopupListItem button>
-              <LabelType>Endereço:</LabelType>
-              <Label>{address}</Label>
-            </PopupListItem>
-            {website && (
+    accepted && (
+      <React.Fragment {...other}>
+        <Marker latitude={latitude} longitude={longitude}>
+          <SVG
+            className="marker yellow"
+            viewport={viewport}
+            onClick={() => loadAddressAndSVGProps(onSVGClick)}
+          />
+        </Marker>
+        {showPopupId && (
+          <Popup
+            latitude={latitude}
+            longitude={longitude}
+            closeButton={true}
+            closeOnClick={false}
+            dynamicPosition={true}
+            onClose={onPopupClose}
+            anchor="top"
+          >
+            <PopupWrapper className="popup">
+              <FavoritesWrapper>
+                <Label>Adicionar aos favoritos</Label>
+                <Heart className="icon" />
+              </FavoritesWrapper>
               <PopupListItem button>
-                <LabelType>Site/Link:</LabelType>
-                <a href={website} target="_blank" rel="noopener noreferrer">
-                  <Label>{website}</Label>
-                </a>
+                <Title>{title}</Title>
+                <Description>{description}</Description>
               </PopupListItem>
-            )}
-            {phone ? (
-              isWhatsapp ? (
+              <PopupListItem button>
+                <LabelType>Endereço:</LabelType>
+                <Label>{address}</Label>
+              </PopupListItem>
+              {website && (
                 <PopupListItem button>
-                  <LabelType>Whatsapp</LabelType>
-                  <a
-                    href={`http://api.whatsapp.com/send?phone=55${phone}&text=Ola,%20eu%20achei%20o%20seu%20estabelecimento%20no%20site%20X,%20pode%20me%20ajudar?%3f&source=&data=`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Label>{phone}</Label>
+                  <LabelType>Site/Link:</LabelType>
+                  <a href={website} target="_blank" rel="noopener noreferrer">
+                    <Label>{website}</Label>
                   </a>
                 </PopupListItem>
-              ) : (
+              )}
+              {phone ? (
+                isWhatsapp ? (
+                  <PopupListItem button>
+                    <LabelType>Whatsapp</LabelType>
+                    <a
+                      href={`http://api.whatsapp.com/send?phone=55${phone}&text=Ola,%20eu%20achei%20o%20seu%20estabelecimento%20no%20site%20X,%20pode%20me%20ajudar?%3f&source=&data=`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Label>{phone}</Label>
+                    </a>
+                  </PopupListItem>
+                ) : (
+                  <PopupListItem button>
+                    <LabelType>Telefone</LabelType>
+                    <a href={`tel:+${phone}`}>
+                      <Label>{phone}</Label>
+                    </a>
+                  </PopupListItem>
+                )
+              ) : null}
+              {placeOptions && (
                 <PopupListItem button>
-                  <LabelType>Telefone</LabelType>
-                  <a href={`tel:+${phone}`}>
-                    <Label>{phone}</Label>
-                  </a>
+                  <LabelType>Opções de atendimento:</LabelType>
+                  <Label>{placeOptions}</Label>
                 </PopupListItem>
-              )
-            ) : null}
-            {placeOptions && (
-              <PopupListItem button>
-                <LabelType>Opções de atendimento:</LabelType>
-                <Label>{placeOptions}</Label>
-              </PopupListItem>
-            )}
-            {workingTime && (
-              <PopupListItem button>
-                <LabelType>Horário de funcionamento:</LabelType>
-                <Label>{workingTime}</Label>
-              </PopupListItem>
-            )}
-            {category && (
-              <PopupListItem button>
-                <LabelType>Categoria:</LabelType>
-                <Label>{category}</Label>
-              </PopupListItem>
-            )}
-          </PopupWrapper>
-        </Popup>
-      )}
-    </React.Fragment>
+              )}
+              {workingTime && (
+                <PopupListItem button>
+                  <LabelType>Horário de funcionamento:</LabelType>
+                  <Label>{workingTime}</Label>
+                </PopupListItem>
+              )}
+              {category && (
+                <PopupListItem button>
+                  <LabelType>Categoria:</LabelType>
+                  <Label>{category}</Label>
+                </PopupListItem>
+              )}
+            </PopupWrapper>
+          </Popup>
+        )}
+      </React.Fragment>
+    )
   );
-};
+});
