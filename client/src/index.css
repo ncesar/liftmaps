@@ -32,3 +32,6 @@ body {
   width: 30px;
   z-index: 99;
 }
+.mapboxgl-popup-content {
+  padding: 2px !important;
+}

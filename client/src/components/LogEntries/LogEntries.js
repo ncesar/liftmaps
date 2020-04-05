@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Marker, Popup } from 'react-map-gl';
+import { Marker } from 'react-map-gl';
 import { SVG } from '../CustomSVGElement/CustomSVGElement';
 import {
   PopupWrapper,
@@ -8,6 +8,7 @@ import {
   Description,
   LabelType,
   PopupListItem,
+  PopupContentWrapper,
 } from './styled';
 import { MapContext } from '../../layout/MapContext';
 
@@ -58,7 +59,7 @@ export const LogEntries = (props) => {
         />
       </Marker>
       {showPopup[entry._id] && (
-        <Popup
+        <PopupContentWrapper
           latitude={entry.latitude}
           longitude={entry.longitude}
           closeButton={true}
@@ -128,7 +129,7 @@ export const LogEntries = (props) => {
               </PopupListItem>
             )}
           </PopupWrapper>
-        </Popup>
+        </PopupContentWrapper>
       )}
     </React.Fragment>
   ));

@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { List, ListItem } from '@material-ui/core';
+import { Popup } from 'react-map-gl';
 
+export const PopupContentWrapper = styled(Popup)`
+  && {
+    padding: 2px;
+  }
+`;
 export const PopupWrapper = styled(List)`
   display: flex;
   flex-direction: column;
@@ -14,6 +20,7 @@ export const PopupListItem = styled(ListItem)`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    padding: 5px;
   }
 `;
 export const Title = styled.h3`
