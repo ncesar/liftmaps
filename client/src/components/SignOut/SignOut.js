@@ -3,7 +3,12 @@ import app from '../../auth/base';
 import { Button } from '@material-ui/core';
 
 const SignOut = () => (
-  <Button color="inherit" size="small" onClick={() => app.auth().signOut()}>
+  <Button
+    color="inherit"
+    variant="outlined"
+    size="small"
+    onClick={() => app.auth().signOut()}
+  >
     Deslogar
   </Button>
 );

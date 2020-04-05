@@ -7,7 +7,16 @@ const router = Router();
 router.get('/', async (req, res, next) => {
   try {
     const entries = await LogEntry.find();
-    res.json(entries);
+    res.json(entries.filter((entry) => entry.accepted === true));
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/not-accepted', async (req, res, next) => {
+  try {
+    const entries = await LogEntry.find();
+    res.json(entries.filter((entry) => entry.accepted === false));
   } catch (error) {
     next(error);
   }
@@ -37,7 +46,7 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:id', async (req, res) => {
   LogEntry.findByIdAndDelete(req.params.id)
-    .then(entry => {
+    .then((entry) => {
       if (!entry) {
         return res.status(404).send({
           message: `Product not found with id ${req.params.id}`,
@@ -45,7 +54,7 @@ router.delete('/:id', async (req, res) => {
       }
       res.send({ message: 'Product deleted successfully!' });
     })
-    .catch(err => {
+    .catch((err) => {
       if (err.kind === 'ObjectId' || err.name === 'NotFound') {
         return res.status(404).send({
           message: `Product not found with id ${req.params.id}`,
@@ -73,7 +82,7 @@ router.put('/:id', async (req, res) => {
     accepted: req.body.accepted,
     website: req.body.website,
   })
-    .then(entry => {
+    .then((entry) => {
       if (!entry) {
         return res.status(404).send({
           message: `Product not found with id ${req.params.id}`,
@@ -81,7 +90,7 @@ router.put('/:id', async (req, res) => {
       }
       res.send(entry);
     })
-    .catch(err => {
+    .catch((err) => {
       if (err.kind === 'ObjectId') {
         return res.status(404).send({
           message: `entry not found with id ${req.params.id}`,

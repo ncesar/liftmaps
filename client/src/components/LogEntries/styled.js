@@ -40,15 +40,3 @@ export const LabelType = styled.p`
   color: rgb(108, 108, 108);
   margin: 0;
 `;
-export const FavoritesWrapper = styled.div`
-  display: inline-flex;
-  padding: 0 16px 8px 16px;
-  border-bottom: 1px solid #eee;
-  margin-top: -10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  .icon {
-    fill: #e04242;
-    margin-left: 3px;
-  }
-`;

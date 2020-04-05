@@ -8,6 +8,7 @@ export const SVG = React.memo(({ viewport, ...other }) => (
     style={{
       width: `${2.8 * viewport}px`,
       height: `${2.8 * viewport}px`,
+      cursor: 'help',
     }}
     viewBox="0 0 512 512"
     {...other}

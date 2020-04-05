@@ -54,4 +54,5 @@ export const StyledFeedback = styled.div`
   justify-content: center;
   text-align: center;
   flex-direction: column;
+  padding: 20px;
 `;

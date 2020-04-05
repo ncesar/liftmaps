@@ -11,6 +11,7 @@ import {
   FormHelperText,
 } from '@material-ui/core';
 import { UserPlus as User } from '@styled-icons/boxicons-solid/UserPlus';
+import ReCAPTCHA from 'react-google-recaptcha';
 import {
   StyledLoginWrapper,
   StyledModal,
@@ -18,11 +19,12 @@ import {
   StyledLabel,
 } from './styled.js';
 
-const SignUp = ({ history }) => {
+const SignUp = React.memo(({ history }) => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
+  const [recaptcha, setRecaptcha] = useState(true);
 
-  const handleSignUp = useCallback(async event => {
+  const handleSignUp = useCallback(async (event) => {
     event.preventDefault();
     const { email, password } = event.target.elements;
     try {
@@ -88,7 +90,12 @@ const SignUp = ({ history }) => {
                   Houve um erro no cadastramento. Informe ao responsável do site
                 </FormHelperText>
               )}
+              <ReCAPTCHA
+                sitekey="6LcYy-YUAAAAAMPb92I3opCflZeiyEthEe4gV_fi"
+                onChange={() => setRecaptcha(true)}
+              />
               <Button
+                disabled={recaptcha}
                 variant="contained"
                 color="primary"
                 type="submit"
@@ -103,6 +110,6 @@ const SignUp = ({ history }) => {
       </StyledModal>
     </StyledLoginWrapper>
   );
-};
+});
 
 export default withRouter(SignUp);

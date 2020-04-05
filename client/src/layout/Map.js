@@ -1,23 +1,30 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
 import ReactMapGL from 'react-map-gl';
 import Geocoder from 'react-map-gl-geocoder';
-import { StyledGeolocateControl, StyledAlertWrapper } from './styled';
-import Alert from '@material-ui/lab/Alert';
+import { StyledGeolocateControl } from './styled';
 import { LogEntries } from '../components/LogEntries/LogEntries';
 import { AddLogEntry } from '../components/AddLogEntry/AddLogEntry';
 import { listLogEntries } from '../data/API';
 import { AuthContext } from '../auth/Auth';
-import Login from '../components/Login/Login';
-import SignUp from '../components/SignUp/SignUp';
-import SignOut from '../components/SignOut/SignOut';
-import { ErrorCircle as ErrorIcon } from '@styled-icons/boxicons-solid/ErrorCircle';
+import { MapContext } from './MapContext';
+import { Topbar } from '../components/Topbar/Topbar';
+import { Filter } from '../components/Filter/Filter';
+import { DonateModal } from '../components/DonateModal/DonateModal';
+import { About } from '../components/About/About';
 
 const Map = ({ ...other }) => {
-  const [logEntries, setLogEntires] = useState([]);
-  const [showPopup, setShowPopup] = useState({});
-  const [addEntryLocation, setAddEntryLocation] = useState(null);
+  const [logEntries, setLogEntries] = useState([]);
+
   const [isNotLogged, setIsNotLogged] = useState(false);
+
+  const [addEntryLocation, setAddEntryLocation] = useState(null);
+
+  const [filter, setFilter] = useState('todos');
+
+  const [donateModal, setDonateModal] = useState(false);
+
   const mapRef = useRef(null);
+
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '100vh',
@@ -27,24 +34,46 @@ const Map = ({ ...other }) => {
   });
 
   const getEntries = async () => {
-    const logEntries = await listLogEntries();
-    setLogEntires(logEntries);
+    const logEntries = await listLogEntries('logs');
+    setLogEntries(logEntries);
+  };
+
+  const checkVisitTime = () => {
+    if (!localStorage.getItem('timesVisited')) {
+      localStorage.setItem('timesVisited', 1);
+    } else if (localStorage.getItem('timesVisited') < 15) {
+      let timesVisited = parseInt(localStorage.getItem('timesVisited'));
+      localStorage.setItem('timesVisited', ++timesVisited);
+    }
+    if (
+      JSON.parse(localStorage.getItem('timesVisited')) === 5 ||
+      JSON.parse(localStorage.getItem('timesVisited')) === 14
+    ) {
+      setDonateModal(true);
+    }
   };
 
   useEffect(() => {
+    checkVisitTime();
     getEntries();
-    navigator.geolocation.getCurrentPosition(pos => {
-      setViewport({
+    navigator.geolocation.getCurrentPosition((pos) => {
+      setViewport((viewport) => ({
         ...viewport,
         latitude: pos.coords.latitude,
         longitude: pos.coords.longitude,
-      });
+      }));
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const { currentUser } = useContext(AuthContext);
 
-  const showAddMarkerPopup = e => {
+  const mapContext = useMemo(
+    () => ({
+      logEntries,
+    }),
+    [logEntries],
+  );
+
+  const { currentUser } = useContext(AuthContext);
+  const showAddMarkerPopup = (e) => {
     if (currentUser) {
       const [longitude, latitude] = e.lngLat;
       setAddEntryLocation({
@@ -56,96 +85,56 @@ const Map = ({ ...other }) => {
     }
   };
 
-  const alertStyle = {
-    color: isNotLogged && '#fff',
-    fontWeight: isNotLogged && 'bold',
-    backgroundColor: isNotLogged && '#f44336',
-  };
   return (
-    <ReactMapGL
-      {...viewport}
-      onViewportChange={setViewport}
-      ref={mapRef}
-      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-      mapStyle="mapbox://styles/ceesar90/ck89fgqi501i71iprcilptp1k?optimize=true"
-      onDblClick={showAddMarkerPopup}
-      {...other}
-    >
-      <StyledAlertWrapper>
-        {currentUser ? (
-          <Alert severity="success" action={<SignOut />}>
-            Seja bem vindo, {currentUser.email}. Clique duas vezes em qualquer
-            lugar do mapa para adicionar um local.
-          </Alert>
-        ) : (
-          <Alert
-            severity="info"
-            style={alertStyle}
-            icon={
-              <ErrorIcon
-                className="icon"
-                style={{ fill: isNotLogged && '#fff' }}
-              />
-            }
-            action={
-              <>
-                <Login />
-                <SignUp />
-              </>
-            }
-          >
-            Para adicionar itens no mapa você precisa estar logado!
-          </Alert>
-        )}
-      </StyledAlertWrapper>
-      <Geocoder
-        mapRef={mapRef}
+    <MapContext.Provider value={mapContext}>
+      <ReactMapGL
+        {...viewport}
         onViewportChange={setViewport}
+        ref={mapRef}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-        placeholder="Procure o local"
-        position="top-left"
-      />
-      <StyledGeolocateControl
-        onViewportChange={setViewport}
-        positionOptions={{ enableHighAccuracy: true }}
-        trackUserLocation={true}
-        fitBoundsOptions={{ maxZoom: viewport.zoom }}
-        onGeolocate={setViewport}
-      />
-      {logEntries.map(entry => (
-        <LogEntries
-          key={entry._id}
-          latitude={entry.latitude}
-          longitude={entry.longitude}
-          viewport={viewport.zoom}
-          onSVGClick={() => setShowPopup({ [entry._id]: true })}
-          showPopupId={showPopup[entry._id]}
-          onPopupClose={() => setShowPopup({})}
-          title={entry.title}
-          description={entry.description}
-          website={entry.website}
-          phone={entry.phone}
-          placeOptions={entry.placeOptions}
-          workingTime={entry.workingTime}
-          category={entry.category}
-          isWhatsapp={entry.isWhatsapp}
-          accepted={entry.accepted}
+        mapStyle="mapbox://styles/ceesar90/ck89fgqi501i71iprcilptp1k?optimize=true"
+        onDblClick={showAddMarkerPopup}
+        {...other}
+      >
+        {donateModal && (
+          <DonateModal
+            donateModal={donateModal}
+            setDonateModal={setDonateModal}
+          />
+        )}
+        <Topbar currentUser={currentUser} isNotLogged={isNotLogged} />
+        <Filter value={filter} setValue={setFilter} />
+        <Geocoder
+          mapRef={mapRef}
+          onViewportChange={setViewport}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          placeholder="Procure por endereço"
+          position="top-left"
         />
-      ))}
-      {addEntryLocation && (
-        <AddLogEntry
-          latitude={addEntryLocation.latitude}
-          longitude={addEntryLocation.longitude}
-          viewport={viewport.zoom}
-          onPopupClose={() => setAddEntryLocation(null)}
-          onLogEntryClose={() => {
-            setAddEntryLocation(null);
-            getEntries();
-          }}
-          location={addEntryLocation}
+        <StyledGeolocateControl
+          onViewportChange={setViewport}
+          positionOptions={{ enableHighAccuracy: true }}
+          trackUserLocation={true}
+          fitBoundsOptions={{ maxZoom: viewport.zoom }}
+          onGeolocate={setViewport}
         />
-      )}
-    </ReactMapGL>
+        <LogEntries viewport={viewport.zoom} category={filter} />
+        {addEntryLocation && (
+          <AddLogEntry
+            latitude={addEntryLocation.latitude}
+            longitude={addEntryLocation.longitude}
+            viewport={viewport.zoom}
+            onPopupClose={() => setAddEntryLocation(null)}
+            onLogEntryClose={() => {
+              setAddEntryLocation(null);
+              getEntries();
+            }}
+            location={addEntryLocation}
+          />
+        )}
+        <About />
+      </ReactMapGL>
+    </MapContext.Provider>
   );
 };
 

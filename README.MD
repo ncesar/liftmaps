@@ -73,19 +73,26 @@ PAGINA INICIAL C O MAPA MOSTRANDO AS MARCAÇÕES COM A VARIÁVEL accepted: true
 
 -- EXTRAS
 
-[ ] - MOSTRAR OS LOCAIS POR LISTA, SEM SER NO MAPA
-[ ] - CRIAR FILTROS
-[ ] - FAVORITOS.. LOCALSTORAGE
+[N] - MOSTRAR OS LOCAIS POR LISTA, SEM SER NO MAPA
+[X] - CRIAR FILTROS
+[N] - FAVORITOS.. LOCALSTORAGE
 [N] - COMENTÁRIOS EM CADA LOCAL(DISQUS)
 [X] - SEARCHBOX(react map gl)
 [X] - mascara para email e telefone com react-hooks-forms
-[ ] - limitar o número de markers por zoom?
-[ ] - trocar erros de console.log para enviar pro servidor
-[ ] - Markers com cor dependendo da cagegoria
-[ ] - Local storage visit time > 5 pedir doação
-[ ] - Localstorage is first time? Mostrar alguma extensao de tutorial
+[X] - trocar erros de console.log para enviar pro servidor
+[N] - Markers com cor dependendo da cagegoria
+[X] - Local storage visit time > 5 pedir doação
+[N] - Localstorage is first time? Mostrar alguma extensao de tutorial
 [X] - FUNÇÃO PARA REMOVER POR ID COM INPUT
-[ ] - LOADPOPUP ON ZOOM - tentar dar load nos popup somente qd der um zoom
+[N] - LOADPOPUP ON ZOOM - tentar dar load nos popup somente qd der um zoom
+[X] - Redes sociais na lateral talvez ou na esquerda do copyright do mapa
+[X] - Criar página de Sobre
+		1. O que é o app?
+		2. Quem desenvolveu?
+		3. Quais ferramentas foram utilizadas?
+		4. Contato
+[X] - Colocar Alert em seu próprio componente
+[X] - verificar se o phone é renderizado mesmo sem ter nada
 [N] - checar se a string começa com https:// ou http://, se não, colocar
 [X] - ordenar dia -> mudar no back para array, enviar como array e ordenar
 [N] - UPLOAD DE IMAGENS
@@ -97,3 +104,14 @@ PAGINA INICIAL C O MAPA MOSTRANDO AS MARCAÇÕES COM A VARIÁVEL accepted: true
 
 https://github.com/uber/react-map-gl/issues?q=performance
 https://github.com/uber/react-map-gl/issues/750
+
+....
+[x] - Criar Context do logEntries
+[X] - Mover .map do MAp.js para o LogEntries.js
+[X] - Criar Radio Button como componente e chamar no Map.js
+[X] - Esse Radio Button iria ter useState dentro do Map.js com valor padrão 'all'
+[X] - E dependendo do clique,  enviaria as informações para o componente LogEntries
+[X] - LogEntries a depender da string recebida, iria renderizar o filtro
+[X] - E aí dentro do LogEntries, um .reduce() iria receber o argumento do determinado filtro
+
+6LcQy-YUAAAAAP9Vs2Ww2o_2O5Xf0Z-GYysBwDoB

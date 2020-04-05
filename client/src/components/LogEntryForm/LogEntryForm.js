@@ -12,6 +12,7 @@ import {
   Checkbox,
 } from '@material-ui/core';
 import { Send } from '@styled-icons/boxicons-solid/Send';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { LogEntryFormWrapper, StyledButton, StyledFeedback } from './styled';
 import { DaysOfWork } from './DaysOfWork';
 import { PlaceOptions } from './PlaceOptions';
@@ -31,19 +32,19 @@ const LogEntryForm = ({ location, onClose }) => {
 
   const [userAccepted, setUserAccepted] = useState(undefined);
 
-  const onSubmit = async data => {
+  const [recaptcha, setRecaptcha] = useState(true);
+
+  const onSubmit = async (data) => {
     try {
       setLoading(true);
 
       data.latitude = location.latitude;
       data.longitude = location.longitude;
 
-      const created = await createLogEntry(data);
-
-      console.log(created);
+      await createLogEntry(data);
+      // console.log(created);
     } catch (error) {
       setError(error.message);
-
       setLoading(false);
     }
   };
@@ -78,7 +79,7 @@ const LogEntryForm = ({ location, onClose }) => {
         {error && <h3 className="error">{error}</h3>}
         <TextField
           name="title"
-          required
+          required={true}
           inputRef={register}
           variant="outlined"
           label="Nome do local"
@@ -93,7 +94,7 @@ const LogEntryForm = ({ location, onClose }) => {
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
             value={category}
-            onChange={e => setCategory(e.target.value)}
+            onChange={(e) => setCategory(e.target.value)}
             label="Esse local.."
           >
             <MenuItem value="Mantimentos 🛒">
@@ -146,6 +147,7 @@ const LogEntryForm = ({ location, onClose }) => {
           variant="outlined"
           margin="dense"
           inputProps={{ maxLength: 60 }}
+          required={true}
         />
         <TextField
           name="website"
@@ -160,9 +162,9 @@ const LogEntryForm = ({ location, onClose }) => {
           name="phone"
           mask="(99) 99999-9999"
           alwaysShowMask
-          onChange={e => setTel(e.target.value)}
+          onChange={(e) => setTel(e.target.value)}
         >
-          {inputProps => (
+          {(inputProps) => (
             <TextField
               {...inputProps}
               inputRef={register}
@@ -187,8 +189,12 @@ const LogEntryForm = ({ location, onClose }) => {
           label="É whatsapp?"
           style={{ marginTop: '-10px' }}
         />
+        <ReCAPTCHA
+          sitekey="6LcYy-YUAAAAAMPb92I3opCflZeiyEthEe4gV_fi"
+          onChange={() => setRecaptcha(true)}
+        />
         <StyledButton
-          disabled={loading}
+          disabled={recaptcha}
           variant="contained"
           color="primary"
           margin="dense"

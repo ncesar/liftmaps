@@ -12,6 +12,7 @@ import {
   FormHelperText,
 } from '@material-ui/core';
 import { LogIn } from '@styled-icons/boxicons-solid/LogIn';
+import ReCAPTCHA from 'react-google-recaptcha';
 import {
   StyledLoginWrapper,
   StyledModal,
@@ -19,11 +20,12 @@ import {
   StyledLabel,
 } from './styled.js';
 
-const Login = () => {
+const Login = React.memo(() => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
+  const [recaptcha, setRecaptcha] = useState(true);
 
-  const handleLogin = useCallback(async event => {
+  const handleLogin = useCallback(async (event) => {
     event.preventDefault();
     const { email, password } = event.target.elements;
     try {
@@ -93,7 +95,12 @@ const Login = () => {
                   O login ou senha informado é incorreto.
                 </FormHelperText>
               )}
+              <ReCAPTCHA
+                sitekey="6LcYy-YUAAAAAMPb92I3opCflZeiyEthEe4gV_fi"
+                onChange={() => setRecaptcha(true)}
+              />
               <Button
+                disabled={recaptcha}
                 variant="contained"
                 color="primary"
                 type="submit"
@@ -108,6 +115,6 @@ const Login = () => {
       </StyledModal>
     </StyledLoginWrapper>
   );
-};
+});
 
 export default React.memo(Login);
