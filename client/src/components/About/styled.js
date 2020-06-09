@@ -8,10 +8,13 @@ export const StyledSobreWrapper = styled.div`
   display: inline-flex;
   align-items: center;
   a {
-    text-decoration: none;
     color: #fff;
     display: flex;
     margin-left: 5px;
+  }
+  @media (max-width: 768px) {
+    bottom: 80px;
+    left: 5px;
   }
 `;
 export const StyledContentWrapper = styled.div``;
@@ -37,12 +40,17 @@ export const StyledDonateWrapper = styled(Paper)`
       text-decoration: underline;
       font-weight: 500;
     }
-    p {
+    p,
+    a {
       color: #828282;
     }
     @media (max-width: 500px) {
       padding: 5px;
       max-width: 300px;
+      p,
+      span {
+        font-size: 13px;
+      }
     }
   }
 `;
@@ -63,7 +71,6 @@ export const StyledDonationOptionsWrapper = styled.span`
   }
   a {
     color: #828282;
-    text-decoration: none;
     display: flex;
     align-items: center;
   }

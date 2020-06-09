@@ -14,6 +14,9 @@ export const PopupWrapper = styled(List)`
   a {
     text-decoration: none;
   }
+  @media (max-width: 600px) {
+    max-width: 100%;
+  }
 `;
 export const PopupListItem = styled(ListItem)`
   && {
@@ -41,9 +44,15 @@ export const Label = styled.p`
   font-size: 1.063rem;
   color: #232222;
   margin: 0;
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
 `;
 export const LabelType = styled.p`
   font-size: 14px;
   color: rgb(108, 108, 108);
   margin: 0;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;

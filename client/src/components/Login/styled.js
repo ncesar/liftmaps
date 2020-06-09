@@ -14,6 +14,9 @@ export const StyledFormWrapper = styled.form`
   flex-direction: column;
   min-width: 300px;
   padding: 20px;
+  @media (max-width: 600px) {
+    padding: 10px 3px;
+  }
 `;
 export const StyledLabel = styled.h3`
   font-size: 1.5rem;

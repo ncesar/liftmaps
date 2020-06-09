@@ -60,6 +60,7 @@ export const LogEntries = (props) => {
       </Marker>
       {showPopup[entry._id] && (
         <PopupContentWrapper
+          className="popup2"
           latitude={entry.latitude}
           longitude={entry.longitude}
           closeButton={true}
@@ -92,9 +93,9 @@ export const LogEntries = (props) => {
             {entry.phone !== '(__) _____-____' ? (
               entry.isWhatsapp ? (
                 <PopupListItem button>
-                  <LabelType>Whatsapp</LabelType>
+                  <LabelType>Whatsapp(clique para abrir)</LabelType>
                   <a
-                    href={`http://api.whatsapp.com/send?phone=55${entry.phone}&text=Ola,%20eu%20achei%20o%20seu%20estabelecimento%20no%20site%20X,%20pode%20me%20ajudar?%3f&source=&data=`}
+                    href={`http://api.whatsapp.com/send?phone=55${entry.phone}&text=Ola,%20eu%20achei%20o%20seu%20estabelecimento%20no%20site%20LiftMaps.com%,%20pode%20me%20ajudar?%3f&source=&data=`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

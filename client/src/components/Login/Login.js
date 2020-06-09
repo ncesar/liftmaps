@@ -49,7 +49,9 @@ const Login = React.memo(() => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const onChange = () => {
+    setRecaptcha(false);
+  };
   return (
     <StyledLoginWrapper>
       <Button color="inherit" size="small" onClick={handleOpen}>
@@ -97,7 +99,7 @@ const Login = React.memo(() => {
               )}
               <ReCAPTCHA
                 sitekey="6LcYy-YUAAAAAMPb92I3opCflZeiyEthEe4gV_fi"
-                onChange={() => setRecaptcha(true)}
+                onChange={onChange}
               />
               <Button
                 disabled={recaptcha}

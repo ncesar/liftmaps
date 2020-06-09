@@ -17,11 +17,7 @@ mongoose.connect(process.env.DATABASE_URL, {
 
 app.use(morgan('common'));
 app.use(helmet()); // utilizando o helmet ele muda alguns headers por questões de segurança
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN,
-  }),
-); // diz que qualquer origem pode fazer request pro backend
+app.use(cors({ origin: 'https://liftmaps.com' })); // diz que qualquer origem pode fazer request pro backend
 app.use(express.json()); // bodyparser
 
 app.get('/', (req, res) => {
@@ -31,17 +27,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/logs', logs);
-app.get('/api/get', (req, res) => {
-  res.json({
-    apiKey: process.env.REACT_APP_FIREBASE_KEY,
-    domain: process.env.REACT_APP_FIREBASE_DOMAIN,
-    database: process.env.REACT_APP_FIREBASE_DATABASE,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-    senderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
-  });
-});
-
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
 

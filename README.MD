@@ -67,9 +67,13 @@ PAGINA INICIAL C O MAPA MOSTRANDO AS MARCAÇÕES COM A VARIÁVEL accepted: true
 [X] - BOTÃO QUE AO CLICAR, SETA COMO ACCEPTED TRUE
 [X] - BOTÃO DE X QUE AO CLICAR, DELETA A ENTRADA DO BANCO DE DADOS
 [X] - FEEDBACK APÓS ADD UM LOCAL
-[ ] - SETAR CORS PARA O SERVIDOR CORRETO
-[ ] - captcha no login e no cadastrar
+[X] - SETAR CORS PARA O SERVIDOR CORRETO
+[X] - captcha no login e no cadastrar
 [X] - react.memo nos componentes
+[X] - Aumentar conteúdo de baixo pro celular
+[X] - ajeitar posicionamento do search, do filtro e do login no celular com right: 0, left: 0, margin: auto
+[ ] - ajeitar popup de add local no celular
+[ ] - erro no cadastro
 
 -- EXTRAS
 

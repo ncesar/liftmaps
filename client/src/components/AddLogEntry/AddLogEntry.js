@@ -5,7 +5,7 @@ import { SVG } from '../CustomSVGElement/CustomSVGElement';
 import { Typography } from '@material-ui/core';
 import { StyledPopupWrapper } from './styled';
 
-export const AddLogEntry = props => {
+export const AddLogEntry = (props) => {
   const {
     latitude,
     longitude,
@@ -24,9 +24,8 @@ export const AddLogEntry = props => {
         longitude={longitude}
         closeButton={true}
         closeOnClick={false}
-        dynamicPosition={true}
         onClose={onPopupClose}
-        anchor="top"
+        anchor="right"
       >
         <StyledPopupWrapper>
           <Typography variant="h5">Novo local</Typography>

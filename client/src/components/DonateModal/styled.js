@@ -22,6 +22,9 @@ export const StyledDonateWrapper = styled(Paper)`
     @media (max-width: 500px) {
       padding: 5px;
       max-width: 300px;
+      h3 {
+        margin-top: 25px;
+      }
     }
   }
 `;

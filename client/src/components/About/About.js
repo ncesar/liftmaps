@@ -13,6 +13,7 @@ import {
 import { XCircle as Close } from '@styled-icons/boxicons-regular/XCircle';
 import ppay from './ppay.jpg';
 import { GithubWithCircle as Github } from '@styled-icons/entypo-social/GithubWithCircle';
+import { FacebookSquare as Facebook } from '@styled-icons/boxicons-logos/FacebookSquare';
 
 export const About = React.memo(() => {
   const [open, setOpen] = useState(false);
@@ -36,11 +37,18 @@ export const About = React.memo(() => {
           Sobre
         </Button>
         <a
-          href="https://instagram.com/cesar.dev"
+          href="https://instagram.com/liftmaps"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img src={Instagram} alt="Ícone do Instagram" />
+        </a>
+        <a
+          href="https://facebook.com/liftmaps"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Facebook className="icon" style={{ fill: '#5d5dbd' }} />
         </a>
         <a
           href="https://youtube.com/ncesar"
@@ -127,7 +135,17 @@ export const About = React.memo(() => {
             <StyledHeader>Desenvolvimento</StyledHeader>
             <p>
               Para desenvolver o app foram utilizada as principais tecnologias:
-              ReactJS, NodeJS, MongoDB, Firebase Auth, Material UI e outras.
+              ReactJS, NodeJS, MongoDB, Firebase Auth, Material UI e outras. O
+              desenvolvimento foi feito por mim e a ideia de criar um app desse
+              estilo foi idealizada por{' '}
+              <a
+                href="https://www.linkedin.com/in/caminishi/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Caio Albuquerque
+              </a>
+              .
             </p>
             <StyledHeader>O autor</StyledHeader>
             <p>

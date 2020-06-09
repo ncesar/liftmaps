@@ -4,13 +4,15 @@ import Geocoder from 'react-map-gl-geocoder';
 import { StyledGeolocateControl } from './styled';
 import { LogEntries } from '../components/LogEntries/LogEntries';
 import { AddLogEntry } from '../components/AddLogEntry/AddLogEntry';
-import { listLogEntries } from '../data/API';
+// import { listLogEntries } from '../data/API';
 import { AuthContext } from '../auth/Auth';
 import { MapContext } from './MapContext';
 import { Topbar } from '../components/Topbar/Topbar';
 import { Filter } from '../components/Filter/Filter';
 import { DonateModal } from '../components/DonateModal/DonateModal';
+import { WelcomeModal } from '../components/WelcomeModal/WelcomeModal';
 import { About } from '../components/About/About';
+import { storedData } from '../data/storedData';
 
 const Map = ({ ...other }) => {
   const [logEntries, setLogEntries] = useState([]);
@@ -22,19 +24,20 @@ const Map = ({ ...other }) => {
   const [filter, setFilter] = useState('todos');
 
   const [donateModal, setDonateModal] = useState(false);
+  const [welcomeModal, setWelcomeModal] = useState(false);
 
   const mapRef = useRef(null);
 
   const [viewport, setViewport] = useState({
-    width: '100vw',
-    height: '100vh',
     latitude: -26.914762,
     longitude: -49.081432,
     zoom: 14,
   });
 
   const getEntries = async () => {
-    const logEntries = await listLogEntries('logs');
+    // const logEntries = await listLogEntries('logs');
+    // setLogEntries(logEntries);
+    const logEntries = storedData;
     setLogEntries(logEntries);
   };
 
@@ -50,6 +53,11 @@ const Map = ({ ...other }) => {
       JSON.parse(localStorage.getItem('timesVisited')) === 14
     ) {
       setDonateModal(true);
+    }
+    // always show since the site is gone
+    setDonateModal(true);
+    if (JSON.parse(localStorage.getItem('timesVisited')) === 1) {
+      setWelcomeModal(true);
     }
   };
 
@@ -91,6 +99,8 @@ const Map = ({ ...other }) => {
         {...viewport}
         onViewportChange={setViewport}
         ref={mapRef}
+        width="100vw"
+        height="100vh"
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         mapStyle="mapbox://styles/ceesar90/ck89fgqi501i71iprcilptp1k?optimize=true"
         onDblClick={showAddMarkerPopup}
@@ -100,6 +110,12 @@ const Map = ({ ...other }) => {
           <DonateModal
             donateModal={donateModal}
             setDonateModal={setDonateModal}
+          />
+        )}
+        {welcomeModal && (
+          <WelcomeModal
+            welcomeModal={welcomeModal}
+            setWelcomeModal={setWelcomeModal}
           />
         )}
         <Topbar currentUser={currentUser} isNotLogged={isNotLogged} />
@@ -112,11 +128,9 @@ const Map = ({ ...other }) => {
           position="top-left"
         />
         <StyledGeolocateControl
-          onViewportChange={setViewport}
           positionOptions={{ enableHighAccuracy: true }}
           trackUserLocation={true}
           fitBoundsOptions={{ maxZoom: viewport.zoom }}
-          onGeolocate={setViewport}
         />
         <LogEntries viewport={viewport.zoom} category={filter} />
         {addEntryLocation && (

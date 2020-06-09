@@ -52,6 +52,9 @@ const LogEntryForm = ({ location, onClose }) => {
   if (userAccepted) {
     onClose();
   }
+  const onChange = () => {
+    setRecaptcha(false);
+  };
   return (
     <React.Fragment>
       {loading && (
@@ -84,7 +87,7 @@ const LogEntryForm = ({ location, onClose }) => {
           variant="outlined"
           label="Nome do local"
           margin="dense"
-          inputProps={{ maxLength: 20 }}
+          inputProps={{ maxLength: 30 }}
         />
         <FormControl variant="outlined" margin="dense">
           <InputLabel id="demo-simple-select-outlined-label">
@@ -191,7 +194,7 @@ const LogEntryForm = ({ location, onClose }) => {
         />
         <ReCAPTCHA
           sitekey="6LcYy-YUAAAAAMPb92I3opCflZeiyEthEe4gV_fi"
-          onChange={() => setRecaptcha(true)}
+          onChange={onChange}
         />
         <StyledButton
           disabled={recaptcha}
@@ -199,7 +202,7 @@ const LogEntryForm = ({ location, onClose }) => {
           color="primary"
           margin="dense"
           type="submit"
-          onClick={() => setUserAccepted(false)}
+          onClick={onChange}
         >
           {loading ? (
             'Carregando...'

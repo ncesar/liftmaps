@@ -44,7 +44,9 @@ const SignUp = React.memo(({ history }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const onChange = () => {
+    setRecaptcha(false);
+  };
   return (
     <StyledLoginWrapper>
       <Button color="inherit" size="small" onClick={handleOpen}>
@@ -78,7 +80,7 @@ const SignUp = React.memo(({ history }) => {
                 margin="dense"
               />
               <TextField
-                label="Senha"
+                label="Senha(6 digitos ou mais)"
                 variant="outlined"
                 name="password"
                 type="password"
@@ -87,12 +89,13 @@ const SignUp = React.memo(({ history }) => {
               />
               {error && (
                 <FormHelperText style={{ color: 'red' }}>
-                  Houve um erro no cadastramento. Informe ao responsável do site
+                  Houve um erro no cadastramento. Verifique se a senha tem 6 ou
+                  mais dígitos.
                 </FormHelperText>
               )}
               <ReCAPTCHA
                 sitekey="6LcYy-YUAAAAAMPb92I3opCflZeiyEthEe4gV_fi"
-                onChange={() => setRecaptcha(true)}
+                onChange={onChange}
               />
               <Button
                 disabled={recaptcha}

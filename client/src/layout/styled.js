@@ -7,4 +7,7 @@ export const StyledGeolocateControl = styled(GeolocateControl)`
   position: absolute;
   right: 8px;
   bottom: 35px;
+  @media (max-width: 768px) {
+    bottom: 80px;
+  }
 `;

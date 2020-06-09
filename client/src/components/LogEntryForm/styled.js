@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core';
 export const LogEntryFormWrapper = styled.form`
   display: flex;
   flex-direction: column;
+  position: relative;
   #demo-simple-select-outlined-label {
     background: white;
   }
@@ -44,7 +45,7 @@ export const StyledFeedback = styled.div`
   height: 110px;
   background: #c5def6;
   position: absolute;
-  z-index: 101;
+  z-index: 103;
   display: flex;
   padding: 10px;
   border-radius: 2px;
