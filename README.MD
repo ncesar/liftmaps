@@ -1,24 +1,22 @@
-# INFO-19
+# LiftMaps
 
-INFO-19 is a WhatsApp bot created to fight censorship caused by the Brazilian government in hiding total deaths by COVID-19 from the population. With this bot and using brasil.io API, I was able to fetch all the data through a simple message on WhatsApp.
+LiftMaps was a fullstack project developed from the ground by me. The idea was to be a real time map that would show small business that were affected by COVID-19 but that still working in some way.
 
-## Installation and use
+## Installation
 
-Use `npm i`;
+Use `npm i` inside client and server folder.
 
-Use `npm start`, fetch the QRCode and you are ready to go.
-
-Do you wanna test? At the moment the bot is online and working, just add to your whatsapp this number: 81 98165-4534 if you are from Brazil and +55 81 98165-4534 if you are outside Brazil.
+Use `npm i` in the root folder and type `npm run dev`
 
 ## Techs
 
-NodeJS and whatsapp-web.js
+The project was made using React, NodeJS, Firebash for auth and Material UI. You can watch this video in PT-BR to know what motivated me and more details: https://www.youtube.com/watch?v=Zruf0qvARNI&t=2s
 
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-A few files were written on the rush to release this project faster(it took me 3) since COVID-19 were hurting so much brazilian ppl so feel free to suggest something.
+A few files were written on the rush to release this project faster(it took me 2 ~ 3 weeks) since COVID-19 were hurting so much small brazilian business so feel free to suggest something.
 
 ## License
 
