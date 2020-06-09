@@ -2,11 +2,13 @@
 
 INFO-19 is a WhatsApp bot created to fight censorship caused by the Brazilian government in hiding total deaths by COVID-19 from the population. With this bot and using brasil.io API, I was able to fetch all the data through a simple message on WhatsApp.
 
-## Installation
+## Installation and use
 
 Use `npm i`;
 
 Use `npm start`, fetch the QRCode and you are ready to go.
+
+Do you wanna test? At the moment the bot is online and working, just add to your whatsapp this number: 81 98165-4534 if you are from Brazil and +55 81 98165-4534 if you are outside Brazil.
 
 ## Techs
 
