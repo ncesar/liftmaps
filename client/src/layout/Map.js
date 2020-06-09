@@ -55,7 +55,7 @@ const Map = ({ ...other }) => {
       setDonateModal(true);
     }
     // always show since the site is gone
-    setDonateModal(true);
+    setWelcomeModal(true);
     if (JSON.parse(localStorage.getItem('timesVisited')) === 1) {
       setWelcomeModal(true);
     }
