@@ -10,7 +10,7 @@ Use `npm i` in the root folder and type `npm run dev`
 
 ## Techs
 
-The project was made using React, NodeJS, Firebash for auth and Material UI. You can watch this video in PT-BR to know what motivated me and more details: https://www.youtube.com/watch?v=Zruf0qvARNI&t=2s
+The project was made using React, NodeJS, Firebash for auth, Mapbox for the maps and Material UI. You can watch this video in PT-BR to know what motivated me and more details: https://www.youtube.com/watch?v=Zruf0qvARNI&t=2s
 
 ## Contributing
 
