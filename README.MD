@@ -1,6 +1,7 @@
 # LiftMaps
 
 LiftMaps was a fullstack project developed from the ground by me. The idea was to be a real time map that would show small business that were affected by COVID-19 but that still working in some way.
+See it online at: https://liftmaps.com
 
 ## Installation
 
