@@ -1,3 +1,5 @@
+Hi! The state of this code does not reflect how I code at the moment. I'm always improving my knowledge and old repos may reflect old/wrong behavior of coding.
+
 # LiftMaps
 
 LiftMaps was a fullstack project developed from the ground by me. The idea was to be a real time map that would show small business that were affected by COVID-19 but that still working in some way.
